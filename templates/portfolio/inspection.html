@@ -1,0 +1,124 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+<div class="container-fluid">
+    <h1>Inspections</h1>
+</div>
+<div class="container-fluid" style="width: 105%;">
+    <div class="mb-3">
+        <table class="table tablestriped table-hover">
+            <thead>
+                <tr>
+                    <th style="width: 150px;" class="text-center">Project Address</th>
+                    <th class="text-center">Permit Number1</th>
+                    <th class="text-center">Permit Number2</th>
+                    <th style="width: 150px;" class="text-center">Insp Type1</th>
+                    <th style="width: 150px;" class="text-center">Insp Status1</th>
+                    <th style="width: 200px;" class="text-center">Insp Date1</th>
+                    <th style="width: 150px;" class="text-center">Insp Type2</th>
+                    <th style="width: 150px;" class="text-center">Insp Status2</th>
+                    <th style="width: 200px;" class="text-center">Insp Date2</th>
+                    <th style="width: 150px;" class="text-center">Insp Type3</th>
+                    <th style="width: 150px;" class="text-center">Insp Status3</th>
+                    <th style="width: 200px;" class="text-center">Insp Date3</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects%}
+                <tr>
+                    <td class="text-start" style="color: blue; font-weight: bold;">{{ project.address }}</td>
+                    <td class="text-start">
+                        {% if project.permit_num1 is none %}
+                        <span style="color: red;">Missing Data</span>
+                        {% else %}
+                        {{ project.permit_num1 }}
+                        {% endif %}
+                    </td>
+                    <td class="text-start">
+                        {% if project.permit_num2 is none %}
+                        <span style="color: black;">No Data</span>
+                        {% else %}
+                        {{ project.permit_num2 }}
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.i_type1 is none %}
+                        <span style="color: red;">Missing Data</span>
+                        {% else %}
+                        {{ project.i_type1 | capitalize }}
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.inspection_status1 is none %}
+                        <span style="color: red;">Missing Status</span>
+                        {% elif project.inspection_status1 == "passed" %}
+                        <span style="color: rgb(3, 160, 3);">{{ project.inspection_status1 | upper }}</span>
+                        {% else %}
+                        <span style="color: orange;">{{ project.inspection_status1 | capitalize }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.inspection_date1 is none %}
+                        <span style="color: red;">Missing Date</span>
+                        {% else %}
+                        {{ project.inspection_date1 }}
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.i_type2 is none %}
+                        <span style="color: red;">No Data</span>
+                        {% else %}
+                        {{ project.i_type2 | capitalize }}
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.inspection_status2 is none %}
+                        <span style="color: red;">No Data</span>
+                        {% elif project.inspection_status2 == "passed" %}
+                        <span style="color: rgb(3, 160, 3);">{{ project.inspection_status2 | upper }}</span>
+                        {% else %}
+                        <span style="color: orange;">{{ project.inspection_status2 | capitalize }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.inspection_date2 is none %}
+                        <span style="color: red;">No Data</span>
+                        {% else %}
+                        {{ project.inspection_date2 }}
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.i_type3 is none %}
+                        <span style="color: black;">No Data</span>
+                        {% else %}
+                        {{ project.i_type3 }}
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.inspection_status3 is none %}
+                        <span style="color: black;">No Data</span>
+                        {% else %}
+                        {{ project.inspection_status3 }}
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.inspection_date3 is none %}
+                        <span style="color: black;">No Data</span>
+                        {% else %}
+                        {{ project.inspection_date3 }}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="12" class="text-center">No data available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

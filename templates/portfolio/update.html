@@ -1,0 +1,226 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<h1>Update Details</h1>
+
+<div class="container mt-5">
+    <form action="{{ url_for('portfolio.update', project_id=project_id) }}" method="post">
+        <input type="hidden" name="project_id" value="{{ project_id }}">
+        <div class="mb-3">
+            <table class="table table-bordered border-primary table-hover">
+                <tbody>
+                    {% for record in project %}
+                    <tr class="fs-5">
+                        <td class="text-start">Project Start Date:</td>
+                        <td class="text-start fw-medium table-info col-6">
+                            <input type="date" name="start_date" value="{{ record.start_date }}" style="width: 400px;">
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <td class="text-start">Purchase Order:</td>
+                        <td class="text-start fw-medium table-info col-6">
+                            <input type="text" name="po_number" value="{{ record.po_number }}" style="width: 400px;">
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <td class="text-start">Address:</td>
+                        <td class="text-start fw-medium table-info col-6">
+                            <input type="text" name="address" value="{{ record.address }}" style="width: 400px;">
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <td class="text-start col-4">Project Type:</td>
+                        <td class="text-start fw-medium table-info col-6">
+                            <select name="p_type" style="width: 200px;">
+                                <option disabled selected value="">Project Type</option>
+                                {% for pt in p_type %}
+                                <option value="{{ pt }}" {% if pt==record.p_type %}selected{%endif %}>
+                                    {{ pt }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <td class="text-start">Number of Chargers:</td>
+                        <td class="text-start fw-medium table-info col-6">
+                            <input type="number" min="1" name="num_chargers" value="{{ record.num_chargers }}"
+                                style="width: 400px;">
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <td class="text-start">Permit Number 1:</td>
+                        <td class="text-start fw-medium table-info col-6">
+                            <input type="text" name="permit_num1" value="{{ record.permit_num1 }}"
+                                style="width: 400px;">
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <th class="text-start" style="font-weight: normal;">Permit Number 2:</th>
+                        <td class="text-start fw-medium table-info col-6">
+                            <input type="text" name="permit_num2"
+                                value="{{ record.permit_num2 if record.permit_num2 is not none else '' }}"
+                                style="width: 400px;">
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <td class="text-start">Inspection Type 1:</td>
+                        <td class="text-start fw-medium table-info col-6">
+                            <select name="i_type1" style="width: 200px;">
+                                <option disabled selected value="">Inspection Type 1</option>
+                                {% for inspection in i_type %}
+                                <option value="{{ inspection }}" {% if inspection==record.i_type1 %}selected{%endif %}>
+                                    {{ inspection }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <td class="text-start">Inspection Date 1:</td>
+                        <td class="text-start fw-medium table-info col-6">
+                            {% if record.inspection_date1 is not none %}
+                            <input type="date" name="inspection_date1" value="{{ record.inspection_date1 }}"
+                                style="width: 400px;">
+                            {% else %}
+                            <input type="date" name="inspection_date1" value="{{ record.inspection_date1 }}"
+                                style="width: 400px;">
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <td class="text-start">Inspection Status 1:</td>
+                        <td class="text-start fw-medium table-info col-6">
+                            <select name="inspection_status1" style="width: 200px;">
+                                <option disabled selected value="">Inspection Status 1</option>
+                                {% for inspect in inspection_status %}
+                                <option value="{{ inspect }}" {% if inspect==record.inspection_status1 %}selected{%endif
+                                    %}>{{ inspect }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <th class="text-start" style="font-weight: normal;">Inspection Type 2:</th>
+                        <td class="text-start fw-medium table-info col-6">
+                            <select name="i_type2" style="width: 200px;">
+                                <option disabled selected value="">Inspection Type 2</option>
+                                {% for inspection in i_type %}
+                                <option value="{{ inspection }}" {% if inspection==record.i_type2 %}selected{%endif %}>
+                                    {{ inspection }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <th class="text-start" style="font-weight: normal;">Inspection Date 2:</th>
+                        <td class="text-start fw-medium table-info col-6">
+                            <input type="date" name="inspection_date2" value="{{ record.inspection_date2 }}"
+                                style="width: 400px;">
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <th class="text-start" style="font-weight: normal;">Inspection Status 2:</th>
+                        <td class="text-start fw-medium table-info col-6"><select name="inspection_status2"
+                                style="width: 200px;">
+                                <option disabled selected value="">Inspection Status 2</option>
+                                {% for inspect in inspection_status %}
+                                <option value="{{ inspect }}" {% if inspect==record.inspection_status2 %}selected{%endif
+                                    %}>{{ inspect }}
+                                </option>
+                                {% endfor %}
+                            </select></td>
+                    </tr>
+                    <tr class="fs-5">
+                        <th class="text-start" style="font-weight: normal;">Inspection Type 3:</th>
+                        <td class="text-start fw-medium table-info col-6">
+                            <select name="i_type3" style="width: 200px;">
+                                <option disabled selected value="">Inspection Type 3</option>
+                                {% for inspection in i_type %}
+                                <option value="{{ inspection }}" {% if inspection==record.i_type3 %}selected{%endif %}>
+                                    {{ inspection }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <th class="text-start" style="font-weight: normal;">Inspection Date 3:</th>
+                        <td class="text-start fw-medium table-info col-6">
+                            <input type="date" name="inspection_date3" value="{{ record.inspection_date3 }}"
+                                style="width: 400px;">
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <th class="text-start" style="font-weight: normal;">Inspection Status 3:</th>
+                        <td class="text-start fw-medium table-info col-6"><select name="inspection_status3"
+                                style="width: 200px;">
+                                <option disabled selected value="">Inspection Status 3</option>
+                                {% for inspect in inspection_status %}
+                                <option value="{{ inspect }}" {% if inspect==record.inspection_status3 %}selected{%endif
+                                    %}>{{ inspect }}
+                                </option>
+                                {% endfor %}
+                            </select></td>
+                    </tr>
+                    <tr class="fs-5">
+                        <td class="text-start">Invoice Percentage:</td>
+                        <td class="text-start fw-medium table-info col-6">
+                            <select name="invoice" style="width: 200px;">
+                                <option disabled selected value="">Invoice Percentage</option>
+                                {% for invo in invoice %}
+                                <option value="{{ invo }}" {% if invo==record.invoice %}selected{%endif %}>
+                                    {{ invo }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <td class="text-start">Paper Work Uploaded to Datto:</td>
+                        <td class="text-start fw-medium table-info col-6">
+                            <select name="datto" style="width: 400px;">
+                                <option disabled selected value="">Paper Work Uploaded to Datto</option>
+                                {% for d in datto %}
+                                <option value="{{ d }}" {% if d==record.datto %}selected{%endif %}>
+                                    {{ d }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <td class="text-start">Project Status:</td>
+                        <td class="text-start fw-medium table-info col-6">
+                            <select name="project_status" style="width: 200px;">
+                                <option disabled selected value="">Project Status</option>
+                                {% for p in project_status %}
+                                <option value="{{ p }}" {% if p==record.project_status %}selected{%endif %}>
+                                    {{ p }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <th class="text-start" style="font-weight: normal;">Notes:</th>
+                        <td class="text-start fw-medium table-info col-6">
+                            {% if record.notes is not none %}
+                            <textarea maxlength="300" rows="5" cols="77" name="notes">{{ record.notes }}</textarea>
+                            {% else %}
+                            <textarea maxlength="300" rows="5" cols="77" name="notes"></textarea>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class=" mb-5">
+            <button class="btn btn-primary btn-lg" type="submit">Save Changes</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,188 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<h1>Project Details</h1>
+
+<div class="dropdown1" style="display: flex; justify-content: flex-end; margin-bottom: 20px;"">
+    <form action=" {{ url_for('portfolio.update', project_id=project_id) }}" method="get">
+    <button class="btn btn-secondary" type="submit">Update Fields</button>
+    </form>
+</div>
+
+<div class="container mt-5">
+    <table class="table table-bordered border-primary table-hover">
+        <tbody>
+            {% for record in project %}
+            <tr class="fs-5">
+                <td class="text-start" style="font-weight: bold;">Project Start Date:</td>
+                <td class="text-start fw-medium table-info col-6" style="color: darkblue; font-weight: bold;">
+                    {% if record.start_date %}
+                    {{ record.start_date.strftime("%B %d, %Y") }}
+                    {% else %}
+                    <span style="color: red;">Missing Date</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr class="fs-5">
+                <td class="text-start">Purchase Order:</td>
+                <td class="text-start fw-medium table-info col-6">{{ record.po_number }}</td>
+            </tr>
+            <tr class="fs-5">
+                <td class="text-start">Address:</td>
+                <td class="text-start fw-medium table-info col-6">{{ record.address }}</td>
+            </tr>
+            <tr class="fs-5">
+                <td class="text-start col-3">Project Type:</td>
+                <td class="text-start fw-medium table-info col-6">
+                    {% if record.p_type == "sce" %}
+                    <span style="color: rgb(204, 153, 0); font-weight: bold;">{{ record.p_type | upper }}</span>
+                    {% else %}
+                    <span style="color: rgb(5, 142, 201); font-weight: bold;">{{ record.p_type | upper }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr class="fs-5">
+                <td class="text-start">Number of Chargers:</td>
+                <td class="text-start fw-medium table-info col-6">{{ record.num_chargers }}</td>
+            </tr>
+            <tr class="fs-5">
+                <th class="text-start" style="font-weight: normal;">Permit Number 1:</th>
+                <td class="text-start fw-medium table-info col-6">
+                    {% if record.permit_num1 %}
+                    {{ record.permit_num1 }}
+                    {% else %}
+                    <span style="color: red;">Missing Permit Number 1</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% if record.permit_num2 is not none %}
+            <tr class="fs-5">
+                <th class="text-start" style="font-weight: normal;">Permit Number2:</th>
+                <td class="text-start fw-medium table-info col-6">{{ record.permit_num2 }}</td>
+            </tr>
+            {% endif %}
+            <tr class="fs-5">
+                <th class="text-start" style="font-weight: normal;">Inspection Type 1:</th>
+                <td class="text-start fw-medium table-info col-6">
+                    {% if record.i_type1 is none %}
+                    <span style="color: red;">Missing Inspection Type 1</span>
+                    {% else %}
+                    {{ record.i_type1 | capitalize }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr class="fs-5">
+                <td class="text-start" style="font-weight: normal;">Inspection Date 1:</td>
+                <td class="text-start fw-medium table-info col-6">
+                    {% if record.inspection_date1 is none %}
+                    <span style="color: red;">Missing Inspection Date 1</span>
+                    {% else %}
+                    <span style="color: rgb(102, 4, 168);">{{ record.inspection_date1.strftime("%B %d, %Y") }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr class="fs-5">
+                <td class="text-start" style="font-weight: normal;">Inspection Status 1:</td>
+                <td class="text-start fw-medium table-info col-6">
+                    {% if record.inspection_status1 is none %}
+                    <span style="color: red;">Missing Inspection Status 1</span>
+                    {% elif record.inspection_status1 == "passed" %}
+                    <span style="color: green;">{{ record.inspection_status1 | upper }}</span>
+                    {% else %}
+                    <span style="color: orange;">{{ record.inspection_status1 | capitalize }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% if record.i_type2 is not none %}
+            <tr class="fs-5">
+                <th class="text-start" style="font-weight: normal;">Inspection Type 2:</th>
+                <td class="text-start fw-medium table-info col-6">
+                    {% if record.i_type2 is none %}
+                    <span style="color: red;">Missing Inspection Type 1</span>
+                    {% else %}
+                    {{ record.i_type2 | capitalize }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endif %}
+            {% if record.inspection_date2 is not none %}
+            <tr class="fs-5">
+                <th class="text-start" style="font-weight: normal;">Inspection Date 2:</th>
+                <td class="text-start fw-medium table-info col-6"> {{ record.inspection_date2.strftime("%B %d, %Y") }}
+                </td>
+            </tr>
+            {% endif %}
+            {% if record.inspection_status2 is not none %}
+            <tr class="fs-5">
+                <th class="text-start" style="font-weight: normal;">Inspection Status 2:</th>
+                <td class="text-start fw-medium table-info col-6">
+                    {% if record.inspection_status1 == "passed" %}
+                    <span style="color: green;">{{ record.inspection_status1 | upper }}</span>
+                    {% else %}
+                    <span style="color: orange;">{{ record.inspection_status1 | capitalize }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endif %}
+            {% if record.i_type3 is not none %}
+            <tr class="fs-5">
+                <th class="text-start" style="font-weight: normal;">Inspection Type 3:</th>
+                <td class="text-start fw-medium table-info col-6">{{ record.i_type3 }}</td>
+            </tr>
+            {% endif %}
+            {% if record.inspection_date3 is not none %}
+            <tr class="fs-5">
+                <th class="text-start" style="font-weight: normal;">Inspection Date 3:</th>
+                <td class="text-start fw-medium table-info col-6"> {{ record.inspection_date3.strftime("%B %d, %Y") }}
+                </td>
+            </tr>
+            {% endif %}
+            {% if record.inspection_status3 is not none %}
+            <tr class="fs-5">
+                <th class="text-start" style="font-weight: normal;">Inspection Status 3:</th>
+                <td class="text-start fw-medium table-info col-6">{{ record.inspection_status3 | upper }}</td>
+            </tr>
+            {% endif %}
+            <tr class="fs-5">
+                <td class="text-start">Invoice Percentage:</td>
+                <td class="text-start fw-medium table-info col-6">
+                    {% if record.invoice == "100%" %}
+                    <span style="color: green;">{{ record.invoice }}</span>
+                    {% else %}
+                    <span style="color: rgb(102, 4, 168);">{{ record.invoice }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr class="fs-5">
+                <td class="text-start">Uploaded to Datto:</td>
+                <td class="text-start fw-medium table-info col-6">
+                    {% if record.datto == "completed" %}
+                    <span style="color: green;">{{ record.datto | upper }}</span>
+                    {%else %}
+                    <span style="color: orange;">{{ record.datto | upper }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr class="fs-5">
+                <td class="text-start">Project Current Status:</td>
+                <td class="text-start fw-medium table-info col-6">
+                    {% if record.project_status == "completed" %}
+                    <span style="color: green;">{{ record.project_status | upper }}</span>
+                    {%else %}
+                    <span style="color: orange;">{{ record.project_status | upper }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% if record.notes is not none %}
+            <tr class="fs-5">
+                <th class="text-start" style="font-weight: normal;">Notes:</th>
+                <td class="text-start fw-medium table-info col-6">
+                    <textarea maxlength="300" rows="5" cols="77">{{ record.notes }}</textarea>
+                </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

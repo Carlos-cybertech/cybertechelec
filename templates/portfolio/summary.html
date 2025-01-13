@@ -1,0 +1,158 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+<div class="fixed-dropdowns">
+    <form action="/portfolio/datto" method="GET">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Filter by Uploaded to Datto
+                </button>
+                <ul class="dropdown-menu">
+                    <li><button class="dropdown-item" type="submit" name="datto" value="completed">Completed</button>
+                    </li>
+                    <li><button class="dropdown-item" type="submit" name="datto" value="in_progress">In
+                            Progress</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Filter by Year
+                </button>
+                <ul class="dropdown-menu">
+                    {% for year in years %}
+                    <li><button class="dropdown-item" type="submit" name="year" value="{{ year }}">{{ year }}</button>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container-fluid">
+    <h1>Projects Summary</h1>
+</div>
+<div class="container-fluid">
+    <div class="mb-3">
+        <table class="table tablestriped table-hover centered-table">
+            <thead>
+                <tr>
+                    <th class="text-center">Project Type</th>
+                    <th class="text-center">Address</th>
+                    <th class="text-center"># Chargers</th>
+                    <th class="text-center">Permit Number1</th>
+                    <th class="text-center">Permit Number2</th>
+                    <th class="text-center">Project Start Date</th>
+                    <th class="text-center">Project Status</th>
+                    <th class="text-center">Uploaded Datto</th>
+                    <th class="text-center">Inspection Type 1</th>
+                    <th class="text-center">Inspection Date 1</th>
+                    <th class="text-center">Inspection Status 1</th>
+                    <th class="text-center">Invoice</th>
+                    <th class="text-center">Notes</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects%}
+                <tr>
+                    <td class="text-center">
+                        {% if project.p_type == "sce" %}
+                        <span style="color: rgb(204, 153, 0); font-weight: bold;">{{ project.p_type | upper }}</span>
+                        {% else %}
+                        <span style="color: rgb(5, 142, 201); font-weight: bold;">{{ project.p_type | upper }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-start" style="color: blue; font-weight: bold;">{{ project.address }}</td>
+                    <td class="text-center">{{ project.num_chargers }}</td>
+                    <td class="text-start">
+                        {% if project.permit_num1 is none %}
+                        <span style="color: red;">Missing Data</span>
+                        {% else %}
+                        {{ project.permit_num1 }}
+                        {% endif %}
+                    </td>
+                    <td class="text-start">
+                        {% if project.permit_num2 is none %}
+                        <span style="color: black;">No Data</span>
+                        {% else %}
+                        {{ project.permit_num2 }}
+                        {% endif %}
+                    </td>
+                    <td class="text-center" style="color: blue;">
+                        {{ project.start_date.strftime("%B %d, %Y") }}
+                    </td>
+                    <td class="text-center">
+                        {% if project.project_status == "completed" %}
+                        <span style="color: rgb(3, 160, 3);">{{ project.project_status | upper }}</span>
+                        {% elif project.project_status == "in_progress" %}
+                        <span style="color: orange;">{{ "In Progress" }}</span>
+                        {% else %}
+                        <span style="color: orange;">{{"On Hold" }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.datto == "completed" %}
+                        <span style="color: rgb(3, 160, 3);">{{ project.datto | upper }}</span>
+                        {% else %}
+                        <span style="color: orange;">{{ "In Progress "}}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.i_type1 is none %}
+                        <span style="color: red;">Missing Type</span>
+                        {% else %}
+                        {{ project.i_type1 | capitalize }}
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.inspection_date1 %}
+                        {{ project.inspection_date1 }}
+                        {% else %}
+                        <span style="color: red;">Missing Date</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.inspection_status1 is none %}
+                        <span style="color: red;">Missing Status</span>
+                        {% elif project.inspection_status1 == "passed" %}
+                        <span style="color: rgb(3, 160, 3);">{{ project.inspection_status1 | upper }}</span>
+                        {% else %}
+                        <span style="color: orange;">{{ project.inspection_status1 | capitalize }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.invoice == "100%" %}
+                        <span style="color: rgb(3, 160, 3);">{{ project.invoice }}</span>
+                        {% else %}
+                        <span style="color: rgb(102, 4, 168);">{{ project.invoice }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-start">
+                        {% if project.notes is not none %}
+                        {{ "Yes" }}
+                        {% else %}
+                        {{ "No"}}
+                        {% endif %}
+                    </td>
+                    <td class="text-start">
+                        <form action="{{ url_for('portfolio.project_details', project_id=project.id) }}" method="get">
+                            <button type="submit" class="btn btn-info">View Details</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="13" class="text-center">No data available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

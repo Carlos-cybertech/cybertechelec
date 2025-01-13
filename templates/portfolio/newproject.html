@@ -1,0 +1,195 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<h1>New Project</h1>
+<div class="container-fluid">
+    <form method="post">
+        <fieldset>
+            <legend style="color: Navy;">Project Information</legend>
+            <!-- Project information fields go here -->
+            <div class="form-group">
+                <label for="po_number" class="group-label">Purchase Order Number</label>
+                <input autocomplete="off" name="po_number" placeholder="PO Number" type="text" id="po_number"
+                    value="{{ form_data.po_number if form_data.po_number is not none else '' }}" class="group-input">
+            </div>
+            <div class="form-group">
+                <label for="address" class="group-label">Project Address</label>
+                <input autocomplete="off" name="address" placeholder="Project Address" type="text" id="address"
+                    value="{{ form_data.address if form_data.address is not none else '' }}" class="group-input">
+            </div>
+            <div class="form-group1">
+                <div class="form-item">
+                    <label for="permit_num1" class="group1-label">Permit Number 1</label>
+                    <input autocomplete="off" name="permit_num1" placeholder="Permit Number 1" type="text"
+                        id="permit_num1"
+                        value="{{ form_data.permit_num1 if form_data.permit_num1 is not none else '' }}"
+                        class="group1-input">
+                </div>
+                <div class="form-item">
+                    <label for="permit_num2" class="group1-label">Permit Number 2</label>
+                    <input autocomplete="off" name="permit_num2" placeholder="Permit Number 2 (Optional)" type="text"
+                        value="{{ form_data.permit_num2 if form_data.permit_num2 is not none else '' }}"
+                        id="permit_num2" class="group1-input">
+                </div>
+            </div>
+            <div class="form-group5">
+                <div class="form-item">
+                    <label for="num_chargers" class="group5-label">Number of Chargers</label>
+                    <input autocomplete="off" name="num_chargers" placeholder="Number of Chargers" type="number" min="1"
+                        value="{{ form_data.num_chargers }}" id="num_chargers" class="group5-input">
+                </div>
+                <div class="form-item">
+                    <label for="start_date" class="group5-label">Project Start Date</label>
+                    <input autocomplete="off" name="start_date" type="date" id="start_date" class="group5-input"
+                        value="{{ form_data.start_date }}">
+                </div>
+                <div class="form-item">
+                    <label for="project_status" class="group5-label">Project Status</label>
+                    <select name="project_status" id="project_status" class="group5-select">
+                        <option disabled selected value="">Project Status</option>
+                        {% for p in project_status %}
+                        <option value="{{ p }}" {% if form_data.project_status==p %}selected{% endif %}>{{ p }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend style="color: Navy;">Inspections</legend>
+            <!-- Inspection details fields go here -->
+            <div class="form-group5">
+                <div class="form-item">
+                    <label for="i_type1" class="group5-label">Inspection Type 1</label>
+                    <select name="i_type1" id="i_type1" class="group5-select">
+                        <option disabled selected value="">Inspection Type 1</option>
+                        {% for inspection in i_type %}
+                        <option value="{{ inspection }}" {% if form_data.i_type1==inspection %}selected{% endif %}>{{
+                            inspection }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label for="inspection_date1" class="group5-label">Inspection Date 1</label>
+                    <input autocomplete="off" name="inspection_date1" type="date" id="inspection_date1"
+                        class="group5-input" value="{{ form_data.inspection_date1 }}">
+                </div>
+                <div class="form-item">
+                    <label for="inspection_status1" class="group5-label">Inspection Status 1</label>
+                    <select name="inspection_status1" id="inspection_status1" class="group5-select">
+                        <option disabled selected value="">Inspection Status 1</option>
+                        {% for inspect in inspection_status %}
+                        <option value="{{ inspect }}" {% if form_data.inspection_status1==p %}selected{% endif %}>{{
+                            inspect }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group5">
+                <div class="form-item">
+                    <label for="i_type2" class="group5-label">Inspection Type 2</label>
+                    <select name="i_type2" id="i_type2" class="group5-select">
+                        <option disabled selected value="">Inspection Type 2 (Optional)</option>
+                        {% for inspection in i_type %}
+                        <option value="{{ inspection }}" {% if form_data.i_type2==inspection %}selected{% endif %}>{{
+                            inspection }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label for="inspection_date2" class="group5-label">Inspection Date 2</label>
+                    <input autocomplete="off" name="inspection_date2" type="date" id="inspection_date2"
+                        class="group5-input" value="{{ form_data.inspection_date2 }}">
+                </div>
+                <div class="form-item">
+                    <label for="inspection_status2" class="group5-label">Inspection Status 2</label>
+                    <select name="inspection_status2" id="inspection_status2" class="group5-select">
+                        <option disabled selected value="">Inspection Status 2 (Optional)</option>
+                        {% for inspect in inspection_status %}
+                        <option value="{{ inspect }}" {% if form_data.inspection_status2==p %}selected{% endif %}>{{
+                            inspect }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group5">
+                <div class="form-item">
+                    <label for="i_type3" class="group5-label">Inspection Type 3</label>
+                    <select name="i_type3" id="i_type3" class="group5-select">
+                        <option disabled selected value="">Inspection Type 3 (Optional)</option>
+                        {% for inspection in i_type %}
+                        <option value="{{ inspection }}" {% if form_data.i_type3==inspection %}selected{% endif %}>{{
+                            inspection }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label for="inspection_date3" class="group5-label">Inspection Date 3</label>
+                    <input autocomplete="off" name="inspection_date3" type="date" id="inspection_date3"
+                        class="group5-input" value="{{ form_data.inspection_date3 }}">
+                </div>
+                <div class="form-item">
+                    <label for="inspection_status3" class="group5-label">Inspection Status 3</label>
+                    <select name="inspection_status3" id="inspection_status3" class="group5-select">
+                        <option disabled selected value="">Inspection Status 3 (Optional)</option>
+                        {% for inspect in inspection_status %}
+                        <option value="{{ inspect }}" {% if form_data.inspection_status3==p %}selected{% endif %}>{{
+                            inspect }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend style="color: Navy;">Invoicing and Closed Out Documents</legend>
+            <!-- Utility data fields go here -->
+            <div class="form-group5">
+                <div class="form-item">
+                    <label for="p_type" class="group5-label">Project Type</label>
+                    <select name="p_type" id="p_type" class="group5-select">
+                        <option disabled selected value="">Project Type</option>
+                        {% for pt in p_type %}
+                        <option value="{{ pt }}" {% if pt==form_data.p_type %}selected{%endif %}>
+                            {{ pt }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label for="invoice" class="group5-label">Invoice Percentage</label>
+                    <select name="invoice" id="invoice" class="group5-select">
+                        <option disabled selected value="">Invoice Percentage</option>
+                        {% for invo in invoice %}
+                        <option value="{{ invo }}" {% if invo==form_data.invoice %}selected{%endif %}>
+                            {{ invo }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label for="datto" class="group5-label">Paper Work Uploaded to Datto</label>
+                    <select name="datto" id="datto" class="group5-select">
+                        <option disabled selected value="">Paper Work Uploaded to Datto</option>
+                        {% for d in datto %}
+                        <option value="{{ d }}" {% if d==form_data.datto %}selected{%endif %}>
+                            {{ d }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend style="color: Navy;">Notes</legend>
+            <!-- Notes data fields go here -->
+            <div class="form-group">
+                <label for="notes" class="group-label">Write Notes (Optional)</label>
+                <textarea autocomplete="off" name="notes" placeholder="300 Character limit" maxlength="300" rows="10"
+                    cols="50">{{ form_data.notes if form_data.notes is not none else '' }}</textarea>
+            </div>
+        </fieldset>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-secondary btn-lg">Save Data</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
