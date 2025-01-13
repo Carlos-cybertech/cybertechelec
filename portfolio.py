@@ -18,7 +18,7 @@ bp = Blueprint("portfolio", __name__)
 
 
 @bp.route("/")
-@login_required
+#@login_required
 def index():
     return render_template("portfolio/index.html")
 
