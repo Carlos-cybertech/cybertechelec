@@ -209,11 +209,11 @@ fieldset {
     }
 
     .container-fluid {
-        margin-left: -60px;
+        margin-left: -40px;
         /* Adjust as needed */
-        padding-left: 10px;
+        padding-left: 0px;
         /* Adjust as needed */
-        padding-right: 30px;
+        padding-right: 20px;
         /* Adjust as needed */
     }
 
