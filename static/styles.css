@@ -205,8 +205,7 @@ fieldset {
     }
 
     .navbar {
-        padding: 20px;
-        /* Increase padding for better spacing */
+        padding: 20px 40px; /* Adjust the second value for left/right padding */
     }
 
     .container-fluid {
