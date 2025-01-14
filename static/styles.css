@@ -265,7 +265,7 @@ fieldset {
         /* Increase image height for larger screens */
         margin-right: 30px;
         /* Increase spacing */
-        padding-left: 20px; /* Adjust as needed */
+        margin-left: 20px; /* Adjust as needed */
     }
 
     body {
