@@ -79,11 +79,11 @@ def register():
                 session["user_id"] = new_user.id
 
                 # Confirm registration
-                flash("Your details have been added successfully!")
+                flash("Your details have been added successfully!", "primary")
                 # Success, go to the login page.
                 return redirect(url_for("auth.login"))
 
-        flash(error)
+        flash(error, "danger")
 
     return render_template("auth/register.html")
 
@@ -118,7 +118,7 @@ def login():
                 session["user_id"] = user.id
                 return redirect(url_for("index"))
 
-        flash(error)
+        flash(error, "danger")
 
     return render_template("auth/login.html")
 
