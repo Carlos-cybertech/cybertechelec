@@ -10,31 +10,12 @@ nav .navbar-brand {
     padding: 15px;
 }
 
-nav img {
-    height: 50px;
-    /* Adjust as needed */
-    margin-right: 20px;
-    /* Adjust spacing as needed */
-}
-
-body {
-    margin-top: 70px;
-    /* Adjust based on navbar height */
-}
-
-th {
-    position: sticky;
-    top: 165px;
-    background-color: white;
-    /* Optional: to ensure the header has a background */
-    z-index: 999;
-    /* Ensure it stays above other content */
-}
-
 .container-fluid {
+    margin-left: -40px;
+    /* Adjust the value as needed */
     padding-left: 0px;
     /* Adjust as needed */
-    padding-right: 10px;
+    padding-right: 20px;
     /* Adjust as needed */
 }
 
@@ -73,19 +54,6 @@ th {
     /* Optional: add some padding */
 }
 
-select {
-    width: 200px;
-    /* Adjust width as needed */
-    height: 40px;
-    /* Adjust height as needed */
-}
-
-fieldset {
-    margin-bottom: 20px;
-    /* Adjust the value as needed */
-}
-
-
 .center-container {
     display: flex;
     flex-direction: column;
@@ -102,7 +70,6 @@ fieldset {
     margin-bottom: 0px;
     /* Adds space between the image and the search box */
 }
-
 
 .search-box {
     display: block;
@@ -121,18 +88,10 @@ fieldset {
     /* Adjust the value as needed */
 }
 
-
-#results {
-    font-size: 20px;
-    /* Adjust the value as needed */
-}
-
 .inline-textbox {
     display: inline-block;
     margin-right: 10px;
 }
-
-
 
 .form-group {
     margin-bottom: 15px;
@@ -174,7 +133,6 @@ fieldset {
     border-radius: 4px;
 }
 
-
 .form-group5 {
     display: flex;
     gap: 5px;
@@ -200,82 +158,185 @@ fieldset {
     flex: 1;
 }
 
-/* For tablets and smaller devices */
-@media (max-width: 768px) {
+nav img {
+    height: 50px;
+    /* Adjust as needed */
+    margin-right: 20px;
+    /* Adjust spacing as needed */
+}
+
+body {
+    margin-top: 70px;
+    /* Adjust based on navbar height */
+}
+
+th {
+    position: sticky;
+    top: 165px;
+    background-color: white;
+    /* Optional: to ensure the header has a background */
+    z-index: 999;
+    /* Ensure it stays above other content */
+}
+
+select {
+    width: 200px;
+    /* Adjust width as needed */
+    height: 40px;
+    /* Adjust height as needed */
+}
+
+fieldset {
+    margin-bottom: 20px;
+    /* Adjust the value as needed */
+}
+
+#results {
+    font-size: 20px;
+    /* Adjust the value as needed */
+}
+
+
+/* Large screens (2560x1440) */
+@media only screen and (min-width: 2560px) {
     nav .navbar-brand {
-        font-size: large;
-        /* Adjust for smaller screens */
+        font-size: 3rem;
+        /* Increase font size for larger screens */
     }
 
     .navbar {
-        padding: 10px;
-        /* Reduce padding */
+        padding: 20px;
+        /* Increase padding for better spacing */
     }
 
-    nav img {
-        height: 40px;
-        /* Reduce image size */
-        margin-right: 10px;
+    .container-fluid {
+        margin-left: -60px;
+        /* Adjust as needed */
+        padding-left: 10px;
+        /* Adjust as needed */
+        padding-right: 30px;
+        /* Adjust as needed */
     }
 
-    select {
-        width: 150px;
-        /* Adjust dropdown width */
-        height: 35px;
+    .centered-table {
+        width: 80%;
+        /* Set a max width for better alignment */
     }
 
-    .center-container {
-        margin-top: 20px;
-        /* Add spacing for smaller screens */
-    }
-
-    .resized-image {
-        width: 200px;
-        /* Adjust image size */
+    .fixed-dropdowns,
+    .dropdown1 {
+        top: 100px;
+        /* Adjust based on your navbar height */
+        padding: 15px 0;
+        /* Increased padding */
     }
 
     .search-box {
-        width: 70%;
-        /* Make the search box wider on smaller screens */
-        font-size: 14px;
-        /* Adjust font size */
+        width: 30%;
+        /* Narrower width on larger screens for balance */
+        font-size: 18px;
+        /* Increased font size */
+        padding: 12px 25px;
+        /* Increased padding */
+    }
+
+    .resized-image {
+        width: 300px;
+        /* Larger image width */
     }
 
     .group-input,
     .group1-input,
     .group5-input[type="date"],
     .group5-select {
-        width: 100%;
-        /* Make inputs full-width for better usability */
-    }
-}
-
-/* For mobile phones */
-@media (max-width: 480px) {
-    nav .navbar-brand {
-        font-size: medium;
-        /* Further reduce font size */
+        width: 60%;
+        /* Increased input width */
     }
 
-    .navbar {
-        padding: 8px;
+    .form-group,
+    .form-group1,
+    .form-group5 {
+        margin-bottom: 25px;
+        /* Increased margin for spacing */
     }
 
     nav img {
-        height: 30px;
-        /* Further reduce image size */
+        height: 70px;
+        /* Increase image height for larger screens */
+        margin-right: 30px;
+        /* Increase spacing */
+    }
+
+    body {
+        margin-top: 100px;
+        /* Increase top margin for a larger navbar */
+    }
+
+    th {
+        top: 200px;
+        /* Adjust sticky header position */
     }
 
     select {
+        width: 300px;
+        /* Widen select box for larger screens */
+        height: 50px;
+        /* Increase height for better usability */
+    }
+
+    fieldset {
+        margin-bottom: 30px;
+        /* Increase spacing for a more relaxed layout */
+    }
+
+    #results {
+        font-size: 24px;
+        /* Larger font size for readability */
+    }
+}
+
+
+/* Mobile devices */
+@media only screen and (max-width: 768px) {
+    nav .navbar-brand {
+        font-size: larger;
+        /* Adjust brand size for better visibility */
+    }
+
+    .navbar {
+        padding: 10px;
+        /* Reduced padding for compact view */
+    }
+
+    .container-fluid {
+        margin-left: -20px;
+        /* Adjust as needed */
+        padding-left: 5px;
+        /* Adjust as needed */
+        padding-right: 10px;
+        /* Adjust as needed */
+    }
+
+    .centered-table {
         width: 100%;
-        /* Make dropdown full-width */
-        height: 30px;
+        /* Full width on mobile */
+    }
+
+    .fixed-dropdowns,
+    .dropdown1 {
+        top: 70px;
+        /* Adjust for smaller navbar sizes */
+        padding: 8px 0;
+        /* Reduced padding */
     }
 
     .search-box {
         width: 90%;
-        /* Almost full-width */
-        font-size: 12px;
+        /* Full width search box */
+        font-size: 14px;
+        /* Smaller font size */
+        padding: 8px 15px;
+        /* Reduce padding */
     }
 
     .resized-image {
@@ -283,20 +344,52 @@ fieldset {
         /* Smaller image for mobile */
     }
 
-    #results {
-        font-size: 16px;
-        /* Adjust font size for results */
+    .group-input,
+    .group1-input,
+    .group5-input[type="date"],
+    .group5-select {
+        width: 90%;
+        /* Full width inputs for easier interaction */
     }
 
     .form-group,
     .form-group1,
     .form-group5 {
-        flex-direction: column;
-        /* Stack form items vertically */
+        margin-bottom: 10px;
+        /* Reduced margin for compact view */
     }
 
-    .form-item {
-        margin-bottom: 10px;
-        /* Add spacing between stacked items */
+    nav img {
+        height: 40px;
+        /* Decrease image height for smaller screens */
+        margin-right: 10px;
+        /* Reduce spacing */
+    }
+
+    body {
+        margin-top: 60px;
+        /* Decrease top margin for a compact layout */
+    }
+
+    th {
+        top: 130px;
+        /* Adjust for smaller navbar heights */
+    }
+
+    select {
+        width: 100%;
+        /* Full width select box for better usability on mobile */
+        height: 35px;
+        /* Slightly decrease height */
+    }
+
+    fieldset {
+        margin-bottom: 15px;
+        /* Reduce spacing for compact view */
+    }
+
+    #results {
+        font-size: 18px;
+        /* Slightly smaller font size */
     }
 }
