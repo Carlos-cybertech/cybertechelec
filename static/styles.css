@@ -364,6 +364,7 @@ fieldset {
         /* Decrease image height for smaller screens */
         margin-right: 10px;
         /* Reduce spacing */
+        padding-left: 20px; /* Adjust as needed */
     }
 
     body {
