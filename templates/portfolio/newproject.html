@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 
 {% block main %}
-<h1>New Project</h1>
 <div class="container-fluid">
+    <h1>New Project</h1>
     <form method="post">
         <fieldset>
             <legend style="color: Navy;">Project Information</legend>
@@ -62,6 +62,7 @@
                     <label for="i_type1" class="group5-label">Inspection Type 1</label>
                     <select name="i_type1" id="i_type1" class="group5-select">
                         <option disabled selected value="">Inspection Type 1</option>
+                        <option value="">None</option>
                         {% for inspection in i_type %}
                         <option value="{{ inspection }}" {% if form_data.i_type1==inspection %}selected{% endif %}>{{
                             inspection }}</option>
@@ -77,6 +78,7 @@
                     <label for="inspection_status1" class="group5-label">Inspection Status 1</label>
                     <select name="inspection_status1" id="inspection_status1" class="group5-select">
                         <option disabled selected value="">Inspection Status 1</option>
+                        <option value="">None</option>
                         {% for inspect in inspection_status %}
                         <option value="{{ inspect }}" {% if form_data.inspection_status1==p %}selected{% endif %}>{{
                             inspect }}</option>
@@ -89,6 +91,7 @@
                     <label for="i_type2" class="group5-label">Inspection Type 2</label>
                     <select name="i_type2" id="i_type2" class="group5-select">
                         <option disabled selected value="">Inspection Type 2 (Optional)</option>
+                        <option value="">None</option>
                         {% for inspection in i_type %}
                         <option value="{{ inspection }}" {% if form_data.i_type2==inspection %}selected{% endif %}>{{
                             inspection }}</option>
@@ -104,6 +107,7 @@
                     <label for="inspection_status2" class="group5-label">Inspection Status 2</label>
                     <select name="inspection_status2" id="inspection_status2" class="group5-select">
                         <option disabled selected value="">Inspection Status 2 (Optional)</option>
+                        <option value="">None</option>
                         {% for inspect in inspection_status %}
                         <option value="{{ inspect }}" {% if form_data.inspection_status2==p %}selected{% endif %}>{{
                             inspect }}</option>
@@ -116,6 +120,7 @@
                     <label for="i_type3" class="group5-label">Inspection Type 3</label>
                     <select name="i_type3" id="i_type3" class="group5-select">
                         <option disabled selected value="">Inspection Type 3 (Optional)</option>
+                        <option value="">None</option>
                         {% for inspection in i_type %}
                         <option value="{{ inspection }}" {% if form_data.i_type3==inspection %}selected{% endif %}>{{
                             inspection }}</option>
@@ -131,6 +136,7 @@
                     <label for="inspection_status3" class="group5-label">Inspection Status 3</label>
                     <select name="inspection_status3" id="inspection_status3" class="group5-select">
                         <option disabled selected value="">Inspection Status 3 (Optional)</option>
+                        <option value="">None</option>
                         {% for inspect in inspection_status %}
                         <option value="{{ inspect }}" {% if form_data.inspection_status3==p %}selected{% endif %}>{{
                             inspect }}</option>

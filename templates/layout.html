@@ -85,6 +85,15 @@
         {% block main %}{% endblock %}
     </main>
 
+    <script>
+        setTimeout(function () {
+            var flashMessages = document.querySelectorAll('.alert');
+            flashMessages.forEach(function (flashMessage) {
+                flashMessage.style.display = 'none';
+            });
+        }, 3000); // Adjust the time as needed
+    </script>
+
     <footer class="mb-5">
         <form action="https://validator.w3.org/check" class="text-center" enctype="multipart/form-data" method="post"
             target="_blank">

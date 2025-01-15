@@ -63,7 +63,8 @@
                         {% if project.inspection_date1 is none %}
                         <span style="color: red;">Missing Date</span>
                         {% else %}
-                        {{ project.inspection_date1 }}
+                        <span style="color: rgb(0, 140, 178);">{{ project.inspection_date1.strftime("%B %d, %Y")
+                            }}</span>
                         {% endif %}
                     </td>
                     <td class="text-center">
@@ -86,7 +87,8 @@
                         {% if project.inspection_date2 is none %}
                         <span style="color: red;">No Data</span>
                         {% else %}
-                        {{ project.inspection_date2 }}
+                        <span style="color: rgb(0, 140, 178);">{{ project.inspection_date2.strftime("%B %d, %Y")
+                            }}</span>
                         {% endif %}
                     </td>
                     <td class="text-center">
@@ -107,7 +109,8 @@
                         {% if project.inspection_date3 is none %}
                         <span style="color: black;">No Data</span>
                         {% else %}
-                        {{ project.inspection_date3 }}
+                        <span style="color: rgb(0, 140, 178);">{{ project.inspection_date3.strftime("%B %d, %Y")
+                            }}</span>
                         {% endif %}
                     </td>
                 </tr>
