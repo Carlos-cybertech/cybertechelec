@@ -68,6 +68,7 @@
                         <td class="text-start fw-medium table-info col-6">
                             <select name="i_type1" style="width: 200px;">
                                 <option disabled selected value="">Inspection Type 1</option>
+                                <option value="">None</option>
                                 {% for inspection in i_type %}
                                 <option value="{{ inspection }}" {% if inspection==record.i_type1 %}selected{%endif %}>
                                     {{ inspection }}
@@ -93,6 +94,7 @@
                         <td class="text-start fw-medium table-info col-6">
                             <select name="inspection_status1" style="width: 200px;">
                                 <option disabled selected value="">Inspection Status 1</option>
+                                <option value="">None</option>
                                 {% for inspect in inspection_status %}
                                 <option value="{{ inspect }}" {% if inspect==record.inspection_status1 %}selected{%endif
                                     %}>{{ inspect }}
@@ -106,6 +108,7 @@
                         <td class="text-start fw-medium table-info col-6">
                             <select name="i_type2" style="width: 200px;">
                                 <option disabled selected value="">Inspection Type 2</option>
+                                <option value="">None</option>
                                 {% for inspection in i_type %}
                                 <option value="{{ inspection }}" {% if inspection==record.i_type2 %}selected{%endif %}>
                                     {{ inspection }}
@@ -126,6 +129,7 @@
                         <td class="text-start fw-medium table-info col-6"><select name="inspection_status2"
                                 style="width: 200px;">
                                 <option disabled selected value="">Inspection Status 2</option>
+                                <option value="">None</option>
                                 {% for inspect in inspection_status %}
                                 <option value="{{ inspect }}" {% if inspect==record.inspection_status2 %}selected{%endif
                                     %}>{{ inspect }}
@@ -138,6 +142,7 @@
                         <td class="text-start fw-medium table-info col-6">
                             <select name="i_type3" style="width: 200px;">
                                 <option disabled selected value="">Inspection Type 3</option>
+                                <option value="">None</option>
                                 {% for inspection in i_type %}
                                 <option value="{{ inspection }}" {% if inspection==record.i_type3 %}selected{%endif %}>
                                     {{ inspection }}
@@ -158,6 +163,7 @@
                         <td class="text-start fw-medium table-info col-6"><select name="inspection_status3"
                                 style="width: 200px;">
                                 <option disabled selected value="">Inspection Status 3</option>
+                                <option value="">None</option>
                                 {% for inspect in inspection_status %}
                                 <option value="{{ inspect }}" {% if inspect==record.inspection_status3 %}selected{%endif
                                     %}>{{ inspect }}

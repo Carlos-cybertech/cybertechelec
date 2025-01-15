@@ -8,10 +8,12 @@ nav .navbar-brand {
     top: 0;
     width: 100%;
     padding: 15px;
+    padding-left: 60px;
+    /* Adjust the value as needed */
 }
 
 .container-fluid {
-    margin-left: -40px;
+    margin-left: -25px;
     /* Adjust the value as needed */
     padding-left: 0px;
     /* Adjust as needed */
@@ -31,7 +33,7 @@ nav .navbar-brand {
     top: 88px;
     /* Adjust this value based on your navbar height */
 
-    width: 100%;
+    width: 34%;
     background-color: white;
     /* Optional: to match your page background */
     z-index: 1000;

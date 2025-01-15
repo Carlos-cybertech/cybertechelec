@@ -37,7 +37,7 @@
 <div class="container-fluid">
     <h1>Projects Summary</h1>
 </div>
-<div class="container-fluid ml-n3">
+<div class="container-fluid">
     <div class="mb-3">
         <table class="table tablestriped table-hover centered-table">
             <thead>
@@ -135,7 +135,7 @@
                     </td>
                     <td class="text-start">
                         {% if project.notes is not none %}
-                        {{ "Yes" }}
+                        <span style="color: rgb(203, 203, 33); font-weight: bold;">{{ "Yes" }}</span>
                         {% else %}
                         {{ "No"}}
                         {% endif %}
