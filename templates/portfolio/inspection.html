@@ -11,17 +11,18 @@
             <thead>
                 <tr>
                     <th style="width: 150px;" class="text-center">Project Address</th>
-                    <th class="text-center">Permit Number1</th>
-                    <th class="text-center">Permit Number2</th>
-                    <th style="width: 150px;" class="text-center">Insp Type1</th>
-                    <th style="width: 150px;" class="text-center">Insp Status1</th>
-                    <th style="width: 200px;" class="text-center">Insp Date1</th>
-                    <th style="width: 150px;" class="text-center">Insp Type2</th>
-                    <th style="width: 150px;" class="text-center">Insp Status2</th>
-                    <th style="width: 200px;" class="text-center">Insp Date2</th>
-                    <th style="width: 150px;" class="text-center">Insp Type3</th>
-                    <th style="width: 150px;" class="text-center">Insp Status3</th>
-                    <th style="width: 200px;" class="text-center">Insp Date3</th>
+                    <th class="text-center">Permit # 1</th>
+                    <th class="text-center">Permit # 2</th>
+                    <th style="width: 150px;" class="text-center">Type 1</th>
+                    <th style="width: 200px;" class="text-center">Date 1</th>
+                    <th style="width: 150px;" class="text-center">Status 1</th>
+                    <th style="width: 150px;" class="text-center">Type 2</th>
+                    <th style="width: 200px;" class="text-center">Date 2</th>
+                    <th style="width: 150px;" class="text-center">Status 2</th>
+                    <th style="width: 150px;" class="text-center">Type 3</th>
+                    <th style="width: 200px;" class="text-center">Date 3</th>
+                    <th style="width: 150px;" class="text-center">Status 3</th>
+
                     <th></th>
                 </tr>
             </thead>
@@ -51,6 +52,14 @@
                         {% endif %}
                     </td>
                     <td class="text-center">
+                        {% if project.inspection_date1 is none %}
+                        <span style="color: red;">Missing Date</span>
+                        {% else %}
+                        <span style="color: rgb(0, 140, 178);">{{ project.inspection_date1.strftime("%B %d, %Y")
+                            }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
                         {% if project.inspection_status1 is none %}
                         <span style="color: red;">Missing Status</span>
                         {% elif project.inspection_status1 == "passed" %}
@@ -60,18 +69,18 @@
                         {% endif %}
                     </td>
                     <td class="text-center">
-                        {% if project.inspection_date1 is none %}
-                        <span style="color: red;">Missing Date</span>
-                        {% else %}
-                        <span style="color: rgb(0, 140, 178);">{{ project.inspection_date1.strftime("%B %d, %Y")
-                            }}</span>
-                        {% endif %}
-                    </td>
-                    <td class="text-center">
                         {% if project.i_type2 is none %}
                         <span style="color: red;">No Data</span>
                         {% else %}
                         {{ project.i_type2 | capitalize }}
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.inspection_date2 is none %}
+                        <span style="color: red;">No Data</span>
+                        {% else %}
+                        <span style="color: rgb(0, 140, 178);">{{ project.inspection_date2.strftime("%B %d, %Y")
+                            }}</span>
                         {% endif %}
                     </td>
                     <td class="text-center">
@@ -84,25 +93,10 @@
                         {% endif %}
                     </td>
                     <td class="text-center">
-                        {% if project.inspection_date2 is none %}
-                        <span style="color: red;">No Data</span>
-                        {% else %}
-                        <span style="color: rgb(0, 140, 178);">{{ project.inspection_date2.strftime("%B %d, %Y")
-                            }}</span>
-                        {% endif %}
-                    </td>
-                    <td class="text-center">
                         {% if project.i_type3 is none %}
                         <span style="color: black;">No Data</span>
                         {% else %}
                         {{ project.i_type3 }}
-                        {% endif %}
-                    </td>
-                    <td class="text-center">
-                        {% if project.inspection_status3 is none %}
-                        <span style="color: black;">No Data</span>
-                        {% else %}
-                        {{ project.inspection_status3 }}
                         {% endif %}
                     </td>
                     <td class="text-center">
@@ -111,6 +105,13 @@
                         {% else %}
                         <span style="color: rgb(0, 140, 178);">{{ project.inspection_date3.strftime("%B %d, %Y")
                             }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.inspection_status3 is none %}
+                        <span style="color: black;">No Data</span>
+                        {% else %}
+                        {{ project.inspection_status3 }}
                         {% endif %}
                     </td>
                 </tr>

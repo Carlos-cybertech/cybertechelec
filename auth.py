@@ -10,9 +10,8 @@ from flask import render_template
 from flask import request
 from flask import session
 from flask import url_for
-import models
-import utils
 
+import models
 from models import get_db
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")

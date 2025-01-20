@@ -14,18 +14,8 @@ nav .navbar-brand {
 
 .container-fluid {
     margin-left: -25px;
-    /* Adjust the value as needed */
     padding-left: 0px;
-    /* Adjust as needed */
     padding-right: 20px;
-    /* Adjust as needed */
-}
-
-.centered-table {
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    /* Adjust the width as needed */
 }
 
 .fixed-dropdowns {

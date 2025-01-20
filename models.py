@@ -1,3 +1,4 @@
+import os
 from flask import g
 from sqlalchemy import Column, Integer, String, Enum, Date, ForeignKey
 from sqlalchemy.orm import relationship
@@ -7,7 +8,6 @@ from sqlalchemy.sql.sqltypes import TIMESTAMP
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import create_engine
-import os
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -59,10 +59,10 @@ class Project(Base):
     num_chargers = Column(Integer, nullable=False)
     permit_num1 = Column(String(64))
     permit_num2 = Column(String(64))
-    project_status = Column(Enum('completed', 'in_progress', 'on_hold'), nullable=False)
+    project_status = Column(Enum('completed', 'in_progress', 'pending', 'on_hold'), nullable=False)
     start_date = Column(Date)
     invoice = Column(Enum('50%', '90%', '100%'), nullable=False)
-    datto = Column(Enum('completed', 'in_progress'), nullable=False)
+    datto = Column(Enum('completed', 'in_progress', 'pending'), nullable=False)
     notes = Column(String(300))
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
 
