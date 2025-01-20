@@ -7,10 +7,11 @@ from flask import session
 from flask import url_for
 from flask import jsonify
 from sqlalchemy import extract
+from datetime import datetime
 
 from auth import login_required
-from models import get_db
 import models
+from models import get_db
 from utils import objects_to_dict
 from utils import extract_form_data, validate_form_data, clean_form_data
 
@@ -49,12 +50,12 @@ def newproject():
         if error:
             flash(error, "danger")
 
-            project_status = ["completed", "in_progress", "on_hold"]
+            project_status = ["completed", "in_progress", "pending", "on_hold"]
             i_type = ["underground", "rough", "power_release", "final", "pending"]
             inspection_status = ["passed", "rescheduled", "pending"]
             p_type = ["dwp", "sce"]
             invoice = ["50%", "90%", "100%"]
-            datto = ["completed", "in_progress"]
+            datto = ["completed", "in_progress", "pending"]
 
             return render_template("portfolio/newproject.html", project_status=project_status, i_type=i_type, inspection_status=inspection_status, p_type=p_type, invoice=invoice, datto=datto, form_data=form_data)
         
@@ -108,12 +109,12 @@ def newproject():
 
 
     else:
-        project_status = ["completed", "in_progress", "on_hold"]
+        project_status = ["completed", "in_progress", "pending", "on_hold"]
         i_type = ["underground", "rough", "power_release", "final", "pending"]
         inspection_status = ["passed", "rescheduled", "pending"]
         p_type = ["dwp", "sce"]
         invoice = ["50%", "90%", "100%"]
-        datto = ["completed", "in_progress"]
+        datto = ["completed", "in_progress", "pending"]
 
         form_data = extract_form_data()
 
@@ -143,14 +144,59 @@ def utils():
 @login_required
 def summary():
     """Summary"""
+
+    current_year = datetime.now().year
+
     db = get_db()
     
-    projects = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"]).order_by(models.Project.start_date.desc()).all()
+    projects = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"], extract('year', models.Project.start_date) == current_year).order_by(models.Project.start_date.desc()).all()
 
     years = db.query(extract('year', models.Project.start_date).distinct().label('year')).order_by('year').all()
     years = [year.year for year in years]
 
     return render_template("portfolio/summary.html", projects=projects, years=years)
+
+
+@bp.route("/portfolio/project_status", methods=['GET'])
+@login_required
+def project_status():
+    """Filter projects, by project status and by start_date year"""
+    db = get_db()
+
+    years = db.query(extract('year', models.Project.start_date).distinct().label('year')).order_by('year').all()
+    years = [year.year for year in years]
+
+    project_status_filter = request.args.get("project_status")
+   
+    query = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"])
+
+    if project_status_filter:
+        query = query.filter(models.Project.project_status == project_status_filter)
+
+    projects = query.order_by(models.Project.start_date.desc()).all()
+
+    return render_template("portfolio/project_status.html", projects=projects, years=years, project_status_filter=project_status_filter)
+
+
+@bp.route("/portfolio/project_year", methods=['GET'])
+@login_required
+def project_year():
+    """Filter projects, by project status and by start_date year"""
+    db = get_db()
+
+    years = db.query(extract('year', models.Project.start_date).distinct().label('year')).order_by('year').all()
+    years = [year.year for year in years]
+
+    year_filter = request.args.get('year', type=int)
+
+    query = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"])
+
+    if year_filter:
+        query = query.filter(extract('year', models.Project.start_date) == year_filter)
+
+    projects = query.order_by(models.Project.start_date.desc()).all()
+
+    return render_template("portfolio/project_year.html", projects=projects, years=years, year_filter=year_filter)
 
 
 @bp.route("/portfolio/datto", methods=['GET'])
@@ -163,15 +209,11 @@ def datto():
     years = [year.year for year in years]
 
     datto_filter = request.args.get("datto")
-    year_filter = request.args.get('year', type=int)
 
     query = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"])
 
-    if datto_filter:
+    if datto_filter:#
         query = query.filter(models.Project.datto == datto_filter)
-
-    if year_filter:
-        query = query.filter(extract('year', models.Project.start_date) == year_filter)
 
     projects = query.order_by(models.Project.start_date.desc()).all()
 
@@ -203,12 +245,12 @@ def update(project_id):
         if error:
             flash(error, "danger")
 
-            project_status = ["completed", "in_progress", "on_hold"]
+            project_status = ["completed", "in_progress", "pending", "on_hold"]
             i_type = ["underground", "rough", "power_release", "final", "pending"]
             inspection_status = ["passed", "rescheduled", "pending"]
             p_type = ["dwp", "sce"]
             invoice = ["50%", "90%", "100%"]
-            datto = ["completed", "in_progress"]
+            datto = ["completed", "in_progress", "pending"]
 
             return render_template("portfolio/update.html", project_status=project_status, i_type=i_type, inspection_status=inspection_status, p_type=p_type, invoice=invoice, datto=datto, project=[form_data], project_id=project_id)
     
@@ -254,12 +296,12 @@ def update(project_id):
         project = db.query(models.Project.p_type, models.Project.po_number, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.invoice, models.Project.datto, models.Project.notes, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Inspection.i_type2, models.Inspection.inspection_status2, models.Inspection.inspection_date2, models.Inspection.i_type3, models.Inspection.inspection_status3, models.Inspection.inspection_date3).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"], models.Project.id == project_id).distinct().all()
 
            
-        project_status = ["completed", "in_progress", "on_hold"]
+        project_status = ["completed", "in_progress", "pending", "on_hold"]
         i_type = ["underground", "rough", "power_release", "final", "pending"]
         inspection_status = ["passed", "rescheduled", "pending"]
         p_type = ["dwp", "sce"]
         invoice = ["50%", "90%", "100%"]
-        datto = ["completed", "in_progress"]
+        datto = ["completed", "in_progress", "pending"]
 
         return render_template("portfolio/update.html", project_status=project_status, i_type=i_type, inspection_status=inspection_status, p_type=p_type, invoice=invoice, datto=datto, project=project, project_id=project_id)
 

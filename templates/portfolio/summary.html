@@ -3,8 +3,42 @@
 {% block main %}
 
 <div class="fixed-dropdowns">
-    <form action="/portfolio/datto" method="GET">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+    <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+        <form action="/portfolio/project_status" method="GET">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Filter by Project Status
+                </button>
+                <ul class="dropdown-menu">
+                    <button class="dropdown-item" type="submit" name="project_status"
+                        value="completed">Completed</button>
+                    <li><button class="dropdown-item" type="submit" name="project_status" value="in_progress">In
+                            Progress</button></li>
+                    <li><button class="dropdown-item" type="submit" name="project_status"
+                            value="pending">Pending</button>
+                    </li>
+                    <li><button class="dropdown-item" type="submit" name="project_status" value="on_hold">On
+                            Hold</button>
+                    </li>
+                </ul>
+            </div>
+        </form>
+        <form action="/portfolio/project_year" method="GET">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Filter by Year
+                </button>
+                <ul class="dropdown-menu">
+                    {% for year in years %}
+                    <li><button class="dropdown-item" type="submit" name="year" value="{{ year }}">{{ year }}</button>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </form>
+        <form action="/portfolio/datto" method="GET">
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
@@ -18,20 +52,8 @@
                     </li>
                 </ul>
             </div>
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    Filter by Year
-                </button>
-                <ul class="dropdown-menu">
-                    {% for year in years %}
-                    <li><button class="dropdown-item" type="submit" name="year" value="{{ year }}">{{ year }}</button>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
 <div class="container-fluid">
@@ -39,21 +61,21 @@
 </div>
 <div class="container-fluid">
     <div class="mb-3">
-        <table class="table tablestriped table-hover centered-table">
+        <table class="table tablestriped table-hover">
             <thead>
                 <tr>
                     <th class="text-center">Project Type</th>
                     <th class="text-center">Address</th>
                     <th class="text-center"># Chargers</th>
-                    <th class="text-center">Permit Number1</th>
-                    <th class="text-center">Permit Number2</th>
+                    <th class="text-center">Permit # 1</th>
+                    <th class="text-center">Permit # 2</th>
                     <th class="text-center">Project Start Date</th>
                     <th class="text-center">Project Status</th>
-                    <th class="text-center">Uploaded Datto</th>
                     <th class="text-center">Inspection Type 1</th>
                     <th class="text-center">Inspection Date 1</th>
                     <th class="text-center">Inspection Status 1</th>
                     <th class="text-center">Invoice</th>
+                    <th class="text-center">Uploaded Datto</th>
                     <th class="text-center">Notes</th>
                     <th></th>
                 </tr>
@@ -63,9 +85,11 @@
                 <tr>
                     <td class="text-center">
                         {% if project.p_type == "sce" %}
-                        <span style="color: rgb(204, 153, 0); font-weight: bold;">{{ project.p_type | upper }}</span>
+                        <span style="color: rgb(204, 153, 0); font-weight: bold;">{{ project.p_type | upper
+                            }}</span>
                         {% else %}
-                        <span style="color: rgb(5, 142, 201); font-weight: bold;">{{ project.p_type | upper }}</span>
+                        <span style="color: rgb(5, 142, 201); font-weight: bold;">{{ project.p_type | upper
+                            }}</span>
                         {% endif %}
                     </td>
                     <td class="text-start" style="color: blue; font-weight: bold;">{{ project.address }}</td>
@@ -89,18 +113,12 @@
                     </td>
                     <td class="text-center">
                         {% if project.project_status == "completed" %}
-                        <span style="color: rgb(3, 160, 3);">{{ project.project_status | upper }}</span>
+                        <span style="color: rgb(0, 104, 71); font-weight: bold;">{{ project.project_status | upper
+                            }}</span>
                         {% elif project.project_status == "in_progress" %}
                         <span style="color: orange;">{{ "In Progress" }}</span>
                         {% else %}
-                        <span style="color: orange;">{{"On Hold" }}</span>
-                        {% endif %}
-                    </td>
-                    <td class="text-center">
-                        {% if project.datto == "completed" %}
-                        <span style="color: rgb(3, 160, 3);">{{ project.datto | upper }}</span>
-                        {% else %}
-                        <span style="color: orange;">{{ "In Progress "}}</span>
+                        <span style="color: red;">{{ project.project_status | capitalize }}</span>
                         {% endif %}
                     </td>
                     <td class="text-center">
@@ -121,21 +139,30 @@
                         {% if project.inspection_status1 is none %}
                         <span style="color: red;">Missing Status</span>
                         {% elif project.inspection_status1 == "passed" %}
-                        <span style="color: rgb(3, 160, 3);">{{ project.inspection_status1 | upper }}</span>
+                        <span style="color: rgb(0, 204, 0);">{{ project.inspection_status1 | upper }}</span>
                         {% else %}
                         <span style="color: orange;">{{ project.inspection_status1 | capitalize }}</span>
                         {% endif %}
                     </td>
                     <td class="text-center">
                         {% if project.invoice == "100%" %}
-                        <span style="color: rgb(3, 160, 3);">{{ project.invoice }}</span>
+                        <span style="color: rgb(0, 204, 0);">{{ project.invoice }}</span>
                         {% else %}
                         <span style="color: rgb(102, 4, 168);">{{ project.invoice }}</span>
                         {% endif %}
                     </td>
+                    <td class="text-center">
+                        {% if project.datto == "completed" %}
+                        <span style="color: rgb(0, 104, 71);">{{ project.datto | upper }}</span>
+                        {% elif project.datto == "in_progress" %}
+                        <span style="color: orange;">{{ "In Progress "}}</span>
+                        {% else %}
+                        <span style="color: red;">{{ project.datto | capitalize }}</span>
+                        {% endif %}
+                    </td>
                     <td class="text-start">
                         {% if project.notes is not none %}
-                        <span style="color: rgb(203, 203, 33); font-weight: bold;">{{ "Yes" }}</span>
+                        <span style="color: rgb(255, 102, 0); font-weight: bold;">{{ "Yes" }}</span>
                         {% else %}
                         {{ "No"}}
                         {% endif %}

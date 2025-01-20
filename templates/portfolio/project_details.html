@@ -14,8 +14,16 @@
         <tbody>
             {% for record in project %}
             <tr class="fs-5">
+                <td class="text-start">Purchase Order:</td>
+                <td class="text-start fw-medium table-info col-6">{{ record.po_number }}</td>
+            </tr>
+            <tr class="fs-5">
+                <td class="text-start">Address:</td>
+                <td class="text-start fw-medium table-info col-6">{{ record.address }}</td>
+            </tr>
+            <tr class="fs-5">
                 <td class="text-start" style="font-weight: bold;">Project Start Date:</td>
-                <td class="text-start fw-medium table-info col-6" style="color: darkblue; font-weight: bold;">
+                <td class="text-start fw-medium table-info col-6" style="color: blue; font-weight: bold;">
                     {% if record.start_date %}
                     {{ record.start_date.strftime("%B %d, %Y") }}
                     {% else %}
@@ -24,12 +32,16 @@
                 </td>
             </tr>
             <tr class="fs-5">
-                <td class="text-start">Purchase Order:</td>
-                <td class="text-start fw-medium table-info col-6">{{ record.po_number }}</td>
-            </tr>
-            <tr class="fs-5">
-                <td class="text-start">Address:</td>
-                <td class="text-start fw-medium table-info col-6">{{ record.address }}</td>
+                <td class="text-start" style="font-weight: bold;">Project Current Status:</td>
+                <td class="text-start fw-medium table-info col-6">
+                    {% if record.project_status == "completed" %}
+                    <span style="color: green; font-weight: bold;">{{ record.project_status | upper }}</span>
+                    {% elif record.project_status == "in_progress" %}
+                    <span style="color: orange;">In Progress</span>
+                    {%else %}
+                    <span style="color: red;">{{ record.project_status | capitalize }}</span>
+                    {% endif %}
+                </td>
             </tr>
             <tr class="fs-5">
                 <td class="text-start col-3">Project Type:</td>
@@ -140,7 +152,7 @@
             {% if record.inspection_status3 is not none %}
             <tr class="fs-5">
                 <th class="text-start" style="font-weight: normal;">Inspection Status 3:</th>
-                <td class="text-start fw-medium table-info col-6">{{ record.inspection_status3 | upper }}</td>
+                <td class="text-start fw-medium table-info col-6">{{ record.inspection_status3 | capitalize }}</td>
             </tr>
             {% endif %}
             <tr class="fs-5">
@@ -158,18 +170,10 @@
                 <td class="text-start fw-medium table-info col-6">
                     {% if record.datto == "completed" %}
                     <span style="color: green;">{{ record.datto | upper }}</span>
+                    {% elif record.datto == "in_progress" %}
+                    <span style="color: orange;">In Progress</span>
                     {%else %}
-                    <span style="color: orange;">{{ record.datto | upper }}</span>
-                    {% endif %}
-                </td>
-            </tr>
-            <tr class="fs-5">
-                <td class="text-start">Project Current Status:</td>
-                <td class="text-start fw-medium table-info col-6">
-                    {% if record.project_status == "completed" %}
-                    <span style="color: green;">{{ record.project_status | upper }}</span>
-                    {%else %}
-                    <span style="color: orange;">{{ record.project_status | upper }}</span>
+                    <span style="color: red;">{{ record.datto | capitalize }}</span>
                     {% endif %}
                 </td>
             </tr>

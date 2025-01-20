@@ -11,12 +11,6 @@
                 <tbody>
                     {% for record in project %}
                     <tr class="fs-5">
-                        <td class="text-start">Project Start Date:</td>
-                        <td class="text-start fw-medium table-info col-6">
-                            <input type="date" name="start_date" value="{{ record.start_date }}" style="width: 400px;">
-                        </td>
-                    </tr>
-                    <tr class="fs-5">
                         <td class="text-start">Purchase Order:</td>
                         <td class="text-start fw-medium table-info col-6">
                             <input type="text" name="po_number" value="{{ record.po_number }}" style="width: 400px;">
@@ -26,6 +20,25 @@
                         <td class="text-start">Address:</td>
                         <td class="text-start fw-medium table-info col-6">
                             <input type="text" name="address" value="{{ record.address }}" style="width: 400px;">
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <td class="text-start">Project Start Date:</td>
+                        <td class="text-start fw-medium table-info col-6">
+                            <input type="date" name="start_date" value="{{ record.start_date }}" style="width: 400px;">
+                        </td>
+                    </tr>
+                    <tr class="fs-5">
+                        <td class="text-start">Project Status:</td>
+                        <td class="text-start fw-medium table-info col-6">
+                            <select name="project_status" style="width: 200px;">
+                                <option disabled selected value="">Project Status</option>
+                                {% for p in project_status %}
+                                <option value="{{ p }}" {% if p==record.project_status %}selected{%endif %}>
+                                    {{ p }}
+                                </option>
+                                {% endfor %}
+                            </select>
                         </td>
                     </tr>
                     <tr class="fs-5">
@@ -192,19 +205,6 @@
                                 {% for d in datto %}
                                 <option value="{{ d }}" {% if d==record.datto %}selected{%endif %}>
                                     {{ d }}
-                                </option>
-                                {% endfor %}
-                            </select>
-                        </td>
-                    </tr>
-                    <tr class="fs-5">
-                        <td class="text-start">Project Status:</td>
-                        <td class="text-start fw-medium table-info col-6">
-                            <select name="project_status" style="width: 200px;">
-                                <option disabled selected value="">Project Status</option>
-                                {% for p in project_status %}
-                                <option value="{{ p }}" {% if p==record.project_status %}selected{%endif %}>
-                                    {{ p }}
                                 </option>
                                 {% endfor %}
                             </select>
