@@ -18,12 +18,6 @@ nav .navbar-brand {
     padding-right: 20px;
 }
 
-/*.centered-table {
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-}*/
-
 .fixed-dropdowns {
     position: sticky;
     top: 88px;
