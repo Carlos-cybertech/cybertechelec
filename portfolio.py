@@ -8,6 +8,7 @@ from flask import url_for
 from flask import jsonify
 from sqlalchemy import extract
 from datetime import datetime
+from sqlalchemy.exc import IntegrityError
 
 from auth import login_required
 import models
@@ -76,10 +77,27 @@ def newproject():
             notes=form_data["notes"],
             user_id=session["user_id"]
         )
-        db.add(new_project)
-        db.commit()
-        project_id = new_project.id
+        
+        try:
+            db.add(new_project)
+            db.commit()
+            project_id = new_project.id
+        except IntegrityError as e:
+            db.rollback()
+            if "UNIQUE constraint failed" in str(e.orig):
+                if "po_number" in str(e.orig):
+                    error = f"Error: The po_number {po_number} is already taken. Please verify your inserting data."
+                elif "address" in str(e.orig):
+                    error = f"Error: The address {address} is already taken. Please verify your inserting data."
+                else:
+                    error = "Error: A unique constraint was violated."
+            else:
+                error = "An integrity error occurred."
 
+        if error:
+            flash(error, "danger")
+                        
+            
         new_inspection = models.Inspection(
             i_type1=form_data["i_type1"],
             inspection_status1=form_data["inspection_status1"],
