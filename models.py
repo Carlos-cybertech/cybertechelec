@@ -24,7 +24,12 @@ DATABASE_USERNAME = os.getenv("DATABASE_USERNAME")
 DATABASE_URL = f"mysql+pymysql://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@{DATABASE_HOSTNAME}:{DATABASE_PORT}/{DATABASE_NAME}"
 
 # Create the database engine
-engine = create_engine(DATABASE_URL)
+engine = create_engine(
+  DATABASE_URL,
+  pool_size=10,
+  max_overflow=20,
+  connect_args={"connect_timeout": 10}
+)
 
 SessionLocal = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
