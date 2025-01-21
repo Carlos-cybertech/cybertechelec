@@ -130,12 +130,12 @@ def utils():
     p_type = request.form.get("dropdown")
 
     if p_type == "dwp":
-        projects = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"], models.Project.p_type == p_type).order_by(models.Project.created_at.desc()).all()
+        projects = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"], models.Project.p_type == p_type).order_by(models.Project.start_date.desc()).all()
 
         return render_template("portfolio/utils.html", projects=projects, p_type=p_type)
 
     elif p_type == "sce":
-        projects = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"], models.Project.p_type == p_type).order_by(models.Project.created_at.desc()).all()
+        projects = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"], models.Project.p_type == p_type).order_by(models.Project.start_date.desc()).all()
 
         return render_template("portfolio/utils.html", projects=projects, p_type=p_type)
     
