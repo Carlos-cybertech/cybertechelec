@@ -29,7 +29,7 @@ engine = create_engine(
   pool_size=10,
   max_overflow=20,
   connect_args={"connect_timeout": 10},
-  pool_recycle=1800,
+  pool_recycle=1800,      # Recycle connections every 30 minutes
   pool_pre_ping=True      # Automatically check if the connection is alive
 )
 
