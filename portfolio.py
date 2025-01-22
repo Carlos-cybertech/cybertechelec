@@ -83,7 +83,7 @@ def newproject():
             db.commit()
         except IntegrityError as e:
             db.rollback()
-            print(f"Error message: {str(e.orig)}")  # Log the error message
+            #print(f"Error message: {str(e.orig)}")  # Log the error message
             if "UNIQUE constraint failed" in str(e.orig):
                 if "po_number" in str(e.orig):
                     error = f"Error: The po_number {form_data['po_number']} is already taken. Please verify your inserting data."
