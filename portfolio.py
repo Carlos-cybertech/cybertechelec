@@ -81,7 +81,6 @@ def newproject():
         try:
             db.add(new_project)
             db.commit()
-            project_id = new_project.id
         except IntegrityError as e:
             db.rollback()
             if "UNIQUE constraint failed" in str(e.orig):
@@ -93,38 +92,48 @@ def newproject():
                     error = "Error: A unique constraint was violated."
             else:
                 error = "An integrity error occurred."
+        else:
+            project_id = new_project.id
 
+            new_inspection = models.Inspection(
+                i_type1=form_data["i_type1"],
+                inspection_status1=form_data["inspection_status1"],
+                inspection_date1=form_data["inspection_date1"],
+                i_type2=form_data["i_type2"],
+                inspection_status2=form_data["inspection_status2"],
+                inspection_date2=form_data["inspection_date2"],
+                i_type3=form_data["i_type3"],
+                inspection_status3=form_data["inspection_status3"],
+                inspection_date3=form_data["inspection_date3"],
+                project_id=project_id
+                )
+            db.add(new_inspection)
+            db.commit()
+            inspection_id=new_inspection.id
+    
+            new_compositekey = models.CompositeKey(
+                user_id=session["user_id"],
+                project_id=project_id,
+                inspection_id=inspection_id
+            )
+            db.add(new_compositekey)
+            db.commit()
+    
+            flash("Project Saved!", "primary")
+            return redirect(url_for("portfolio.summary"))
+            
         if error:
             flash(error, "danger")
-                        
+
+            project_status = ["completed", "in_progress", "pending", "on_hold"]
+            i_type = ["underground", "rough", "power_release", "final", "pending"]
+            inspection_status = ["passed", "rescheduled", "pending"]
+            p_type = ["dwp", "sce"]
+            invoice = ["50%", "90%", "100%"]
+            datto = ["completed", "in_progress", "pending"]
+
+            return render_template("portfolio/newproject.html", project_status=project_status, i_type=i_type, inspection_status=inspection_status, p_type=p_type, invoice=invoice, datto=datto, form_data=form_data)
             
-        new_inspection = models.Inspection(
-            i_type1=form_data["i_type1"],
-            inspection_status1=form_data["inspection_status1"],
-            inspection_date1=form_data["inspection_date1"],
-            i_type2=form_data["i_type2"],
-            inspection_status2=form_data["inspection_status2"],
-            inspection_date2=form_data["inspection_date2"],
-            i_type3=form_data["i_type3"],
-            inspection_status3=form_data["inspection_status3"],
-            inspection_date3=form_data["inspection_date3"],
-            project_id=project_id
-        )
-        db.add(new_inspection)
-        db.commit()
-        inspection_id=new_inspection.id
-
-        new_compositekey = models.CompositeKey(
-            user_id=session["user_id"],
-            project_id=project_id,
-            inspection_id=inspection_id
-        )
-        db.add(new_compositekey)
-        db.commit()
-
-        flash("Project Saved!", "primary")
-        return redirect(url_for("portfolio.summary"))
-
 
     else:
         project_status = ["completed", "in_progress", "pending", "on_hold"]
