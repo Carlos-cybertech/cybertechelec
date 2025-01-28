@@ -316,7 +316,7 @@ def update(project_id):
         
         db.commit()
         flash("Project Updated!", "primary")
-        return redirect(url_for("portfolio.summary"))
+        return redirect(url_for("portfolio.project_details"))
     
 
     else:
