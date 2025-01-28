@@ -132,7 +132,7 @@
                     </td>
                     <td class="text-center">
                         {% if project.inspection_date1 %}
-                        {{ project.inspection_date1 }}
+                        {{ project.inspection_date1.strftime("%B %d, %Y") }}
                         {% else %}
                         <span style="color: red;">Missing Date</span>
                         {% endif %}
