@@ -346,7 +346,7 @@ def inspection():
 
     query = db.query(models.Project.address, models.Project.permit_num1, models.Project.permit_num2, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Inspection.i_type2, models.Inspection.inspection_status2, models.Inspection.inspection_date2, models.Inspection.i_type3, models.Inspection.inspection_status3, models.Inspection.inspection_date3).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"])
 
-    if project_status_filter:
+    if inspection_status_filter:
         query = query.filter(models.Inspection.inspection_status1 == inspection_status_filter)
 
     projects = query.order_by(models.Inspection.inspection_date1.desc(), models.Inspection.inspection_date2.desc()).all()
