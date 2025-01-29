@@ -2,6 +2,29 @@
 
 {% block main %}
 
+<div class="fixed-dropdowns">
+    <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+        <form action="/portfolio/inspection" method="GET">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Inspection Status
+                </button>
+                <ul class="dropdown-menu">
+                    <button class="dropdown-item" type="submit" name="inspection_status1"
+                        value="passed">Passed</button>
+                    <li><button class="dropdown-item" type="submit" name="inspection_status1" 
+                            value="rescheduled">Rescheduled</button>
+                    </li>
+                    <li><button class="dropdown-item" type="submit" name="inspection_status1"
+                            value="pending">Pending</button>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="container-fluid">
     <h1>Inspections</h1>
 </div>
