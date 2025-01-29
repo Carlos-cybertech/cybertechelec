@@ -349,6 +349,6 @@ def inspection():
     if inspection_status_filter:
         query = query.filter(models.Inspection.inspection_status1 == inspection_status_filter)
 
-    projects = query.order_by(models.Inspection.inspection_date1.desc(), models.Inspection.inspection_date2.desc()).all()
+    projects = query.order_by(models.Inspection.inspection_date1.desc()).all()
 
     return render_template("portfolio/inspection.html", projects=projects)
