@@ -1,7 +1,11 @@
 {% extends "layout.html" %}
 
 {% block main %}
-<a href="{{ url_for('portfolio.project_details', project_id=project_id) }}" class="btn">Go Back</a>
+<div class="fixed-dropdowns">
+    <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+        <a class="btn btn-primary btn-lg" href="{{ url_for('portfolio.project_details', project_id=project_id) }}" role="button">Go Back</a>
+    </div>
+</div>
 
 <h1>Update Details</h1>
 
