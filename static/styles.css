@@ -55,7 +55,7 @@ nav .navbar-brand {
 }
 
 .resized-image {
-    width: 350px;
+    width: 400px;
     /* Adjust the value as needed */
     height: auto;
     /* Maintains the aspect ratio */
