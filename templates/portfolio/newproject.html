@@ -193,6 +193,16 @@
                     cols="50">{{ form_data.notes if form_data.notes is not none else '' }}</textarea>
             </div>
         </fieldset>
+        <fieldset>
+            <legend style="color: Navy;">Equipment Notes</legend>
+            <!-- Notes data fields go here -->
+            <div class="form-group">
+                <label for="equipment_notes" class="group-label">Write Equipment Notes (Optional)</label>
+                <textarea autocomplete="off" name="equipment_notes" placeholder="300 Character limit" maxlength="300"
+                    rows="10"
+                    cols="50">{{ form_data.equipment_notes if form_data.equipment_notes is not none else '' }}</textarea>
+            </div>
+        </fieldset>
         <div class="mb-3">
             <button type="submit" class="btn btn-secondary btn-lg">Save Data</button>
         </div>
