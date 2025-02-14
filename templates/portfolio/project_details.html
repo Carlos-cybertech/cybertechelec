@@ -185,6 +185,14 @@
                 </td>
             </tr>
             {% endif %}
+            {% if record.equipment_notes is not none %}
+            <tr class="fs-5">
+                <th class="text-start" style="font-weight: normal;">Equipment Notes:</th>
+                <td class="text-start fw-medium table-info col-6">
+                    <textarea maxlength="300" rows="5" cols="77">{{ record.equipment_notes }}</textarea>
+                </td>
+            </tr>
+            {% endif %}
             {% endfor %}
         </tbody>
     </table>
