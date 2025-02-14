@@ -28,6 +28,7 @@ def extract_form_data():
         "invoice": request.form.get("invoice"),
         "datto": request.form.get("datto"),
         "notes": request.form.get("notes"),
+        "equipment_notes": request.form.get("equipment_notes"),
         # Related to Inspection table
         "i_type1": request.form.get("i_type1"),
         "inspection_date1": request.form.get("inspection_date1"),
@@ -65,6 +66,7 @@ def clean_form_data(form_data):
     form_data["po_number"] = form_data["po_number"].strip() if form_data["po_number"] else None
     form_data["address"] = form_data["address"].strip() if form_data["address"] else None
     form_data["notes"] = form_data["notes"].strip() if form_data["notes"] else None
+    form_data["equipment_notes"] = form_data["equipment_notes"].strip() if form_data["equipment_notes"] else None
     form_data["permit_num1"] = form_data["permit_num1"].strip() if form_data["permit_num1"] else None
     form_data["permit_num2"] = form_data["permit_num2"].strip() if form_data["permit_num2"] else None
     form_data["i_type1"] = form_data["i_type1"] if form_data["i_type1"] else None
