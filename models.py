@@ -71,6 +71,7 @@ class Project(Base):
     invoice = Column(Enum('50%', '90%', '100%'), nullable=False)
     datto = Column(Enum('completed', 'in_progress', 'pending'), nullable=False)
     notes = Column(String(300))
+    equipment_notes = Column(String(300))
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
 
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
