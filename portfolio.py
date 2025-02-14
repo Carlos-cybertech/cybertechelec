@@ -75,6 +75,7 @@ def newproject():
             invoice=form_data["invoice"],
             datto=form_data["datto"],
             notes=form_data["notes"],
+            equipment_notes=form_data["equipment_notes"],
             user_id=session["user_id"]
         )
         
@@ -159,12 +160,12 @@ def utils():
     p_type = request.form.get("dropdown")
 
     if p_type == "dwp":
-        projects = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"], models.Project.p_type == p_type).order_by(models.Project.start_date.desc()).all()
+        projects = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes, models.Project.equipment_notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"], models.Project.p_type == p_type).order_by(models.Project.start_date.desc()).all()
 
         return render_template("portfolio/utils.html", projects=projects, p_type=p_type)
 
     elif p_type == "sce":
-        projects = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"], models.Project.p_type == p_type).order_by(models.Project.start_date.desc()).all()
+        projects = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes, models.Project.equipment_notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"], models.Project.p_type == p_type).order_by(models.Project.start_date.desc()).all()
 
         return render_template("portfolio/utils.html", projects=projects, p_type=p_type)
     
@@ -178,7 +179,7 @@ def summary():
 
     db = get_db()
     
-    projects = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"], extract('year', models.Project.start_date) == current_year).order_by(models.Project.start_date.desc()).all()
+    projects = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes, models.Project.equipment_notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"], extract('year', models.Project.start_date) == current_year).order_by(models.Project.start_date.desc()).all()
 
     years = db.query(extract('year', models.Project.start_date).distinct().label('year')).order_by('year').all()
     years = [year.year for year in years]
@@ -197,7 +198,7 @@ def project_status():
 
     project_status_filter = request.args.get("project_status")
    
-    query = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"])
+    query = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes, models.Project.equipment_notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"])
 
     if project_status_filter:
         query = query.filter(models.Project.project_status == project_status_filter)
@@ -218,7 +219,7 @@ def project_year():
 
     year_filter = request.args.get('year', type=int)
 
-    query = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"])
+    query = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes, models.Project.equipment_notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"])
 
     if year_filter:
         query = query.filter(extract('year', models.Project.start_date) == year_filter)
@@ -239,7 +240,7 @@ def datto():
 
     datto_filter = request.args.get("datto")
 
-    query = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"])
+    query = db.query(models.Project.id, models.Project.p_type, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.datto, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Project.invoice, models.Project.notes, models.Project.equipment_notes).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"])
 
     if datto_filter:#
         query = query.filter(models.Project.datto == datto_filter)
@@ -256,7 +257,7 @@ def project_details(project_id):
 
     db = get_db()
 
-    project = db.query(models.Project.p_type, models.Project.po_number, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.invoice, models.Project.datto, models.Project.notes, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Inspection.i_type2, models.Inspection.inspection_status2, models.Inspection.inspection_date2, models.Inspection.i_type3, models.Inspection.inspection_status3, models.Inspection.inspection_date3).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"], models.Project.id == project_id).distinct().all()
+    project = db.query(models.Project.p_type, models.Project.po_number, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.invoice, models.Project.datto, models.Project.notes, models.Project.equipment_notes, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Inspection.i_type2, models.Inspection.inspection_status2, models.Inspection.inspection_date2, models.Inspection.i_type3, models.Inspection.inspection_status3, models.Inspection.inspection_date3).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"], models.Project.id == project_id).distinct().all()
 
     return render_template("portfolio/project_details.html", project=project, project_id=project_id)
 
@@ -300,6 +301,7 @@ def update(project_id):
             project.invoice = form_data["invoice"]
             project.datto = form_data["datto"]
             project.notes = form_data["notes"]
+            project.equipment_notes = form_data["equipment_notes"]
         
         inspection = db.query(models.Inspection).filter(models.Inspection.project_id == project.id).first()
 
@@ -322,7 +324,7 @@ def update(project_id):
     else:
         db = get_db()
 
-        project = db.query(models.Project.p_type, models.Project.po_number, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.invoice, models.Project.datto, models.Project.notes, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Inspection.i_type2, models.Inspection.inspection_status2, models.Inspection.inspection_date2, models.Inspection.i_type3, models.Inspection.inspection_status3, models.Inspection.inspection_date3).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"], models.Project.id == project_id).distinct().all()
+        project = db.query(models.Project.p_type, models.Project.po_number, models.Project.address, models.Project.num_chargers, models.Project.permit_num1, models.Project.permit_num2, models.Project.project_status, models.Project.start_date, models.Project.invoice, models.Project.datto, models.Project.notes, models.Project.equipment_notes, models.Inspection.i_type1, models.Inspection.inspection_status1, models.Inspection.inspection_date1, models.Inspection.i_type2, models.Inspection.inspection_status2, models.Inspection.inspection_date2, models.Inspection.i_type3, models.Inspection.inspection_status3, models.Inspection.inspection_date3).join(models.User, models.Project.user_id == models.User.id).join(models.Inspection, models.Project.id == models.Inspection.project_id).filter(models.User.id == session["user_id"], models.Project.id == project_id).distinct().all()
 
            
         project_status = ["completed", "in_progress", "pending", "on_hold"]
