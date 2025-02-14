@@ -79,6 +79,7 @@
                     <th class="text-center">Invoice</th>
                     <th class="text-center">Uploaded Datto</th>
                     <th class="text-center">Notes</th>
+                    <th class="text-center">Eqpt. Notes</th>
                     <th></th>
                 </tr>
             </thead>
@@ -164,6 +165,13 @@
                     </td>
                     <td class="text-start">
                         {% if project.notes is not none %}
+                        <span style="color: rgb(255, 102, 0); font-weight: bold;">{{ "Yes" }}</span>
+                        {% else %}
+                        {{ "No"}}
+                        {% endif %}
+                    </td>
+                    <td class="text-start">
+                        {% if project.equipment_notes is not none %}
                         <span style="color: rgb(255, 102, 0); font-weight: bold;">{{ "Yes" }}</span>
                         {% else %}
                         {{ "No"}}
